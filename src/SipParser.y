@@ -2,6 +2,9 @@
 %define api.prefix {sip_}
 
 %defines 
+%code top {
+  // ##### top declaration
+}
 %code provides{
   // prototype lexer definition
   #include <stdio.h>
@@ -10,10 +13,15 @@
   void sip_error(const char *error);
 }
 
+%union {
+  char *str;
+  int ival;
+}
+
 %token HELLO
 
 %%
-Message: HELLO { printf("parser got a message\n");}
+Message: | Message HELLO { printf("parser got a message\n");}
   ;
   
 %%
